@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<th:block th:replace="~{fragments/head.html}"></th:block>
+<body>
+<th:block th:replace="~{fragments/header.html}"></th:block>
+<section class="register" id="register">
+  <div class="register-text text-center">
+    <div class="register-form--wrapper">
+      <h1 class="register-header" >Register</h1>
+      <form th:action="@{/register}" th:method="POST" th:object="${registerUserDTO}" id="register-form">
+        <div class="register-form-field">
+          <input id="username" class="register-form-username" th:field="*{username}" type="text" placeholder="Username" required>
+          <div class="error"></div>
+        </div>
+        <div class="register-form-field">
+          <input id="email" class="register-form-email" th:field="*{email}" type="email" placeholder="E-mail" required>
+          <span class="error"></span>
+        </div>
+        <div class="register-form-field">
+          <input id="password" class="register-form-password" th:field="*{password}" type="password" placeholder="Password" required>
+          <span class="error"></span>
+
+        </div>
+        <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
+          <li th:each="message : ${error.split(',')}">
+            <p class="error-message" th:text="${message}"></p>
+          </li>
+        </ul>
+        <div class="register-form-field" autocomplete="off">
+          <input id="confirmPassword" class="register-form-password" th:field="*{confirmPassword}" type="password" placeholder="Confirm password" required>
+          <span class="error"></span>
+        </div>
+        <ul class="text-danger" th:each="error: ${#fields.errors('confirmPassword')}">
+          <li th:each="message : ${error.split(',')}">
+            <p class="error-message" th:text="${message}"></p>
+          </li>
+        </ul>
+        <input name="submit-button" class="register-button" type="submit" value="Register">
+      </form>
+    </div>
+  </div>
+</section>
+<th:block th:replace="~{fragments/footer.html}"></th:block>
+<script type="text/javascript">
+  const form = document.getElementById("register-form");
+  const username = document.getElementById("username");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+
+
+  username.addEventListener("input", (event) => {
+
+    var usernameValue = document.getElementById("username").value;
+
+    if (usernameValue.length < 3 || usernameValue.length > 15) {
+      event.preventDefault();
+      alert("Username should be between 3 and 15 characters!");
+      // username.setCustomValidity("Username should be between 3 and 15 characters!")
+    } else {
+      username.setCustomValidity("");
+    }
+
+  });
+
+  email.addEventListener("input", event => {
+
+    if (email.validity.typeMismatch) {
+      email.setCustomValidity("Please enter a valid e-mail address!");
+    } else {
+      email.setCustomValidity("");
+    }
+
+  });
+
+  password.addEventListener("input", event => {
+
+    var passwordValue = document.getElementById("password").value;
+
+    if (passwordValue.length < 3 || passwordValue.length > 15) {
+      event.preventDefault();
+      password.setCustomValidity("Password must be between 3 and 15 characters! HAHA");
+    } else {
+      password.setCustomValidity("");
+    }
+
+  });
+
+
+  confirmPassword.addEventListener("input", event => {
+
+    var passwordValue = document.getElementById("password").value;
+    var confirmPasswordValue = document.getElementById("confirmPassword").value;
+
+    if (confirmPasswordValue.length < 3 || confirmPasswordValue.length > 15) {
+      event.preventDefault();
+      password.setCustomValidity("Password must be between 3 and 15 characters!");
+    } else {
+      password.setCustomValidity("");
+    }
+
+    if (passwordValue !== confirmPasswordValue) {
+      event.preventDefault();
+      confirmPassword.setCustomValidity("Passwords should match!")
+    } else {
+      confirmPassword.setCustomValidity("");
+    }
+
+  });
+
+
+</script>
+</body>
+
+</html>
