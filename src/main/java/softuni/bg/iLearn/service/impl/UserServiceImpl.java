@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
         MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT ,String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
 
-        //TODO fix NoSuchMethodEx while sending email
+//        TODO fix NoSuchMethodEx while sending email
 //        mailService.sendMail(mailDetails);
         userRepository.save(user);
         return true;

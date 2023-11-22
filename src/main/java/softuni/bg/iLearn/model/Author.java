@@ -23,5 +23,4 @@ public class Author {
     private String lastName;
     @OneToMany
     private List<Course> courses;
-    private String string;
 }

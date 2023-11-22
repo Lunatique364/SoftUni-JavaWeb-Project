@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{fragments/head.html}"></th:block>
 <body>
 <th:block th:replace="~{fragments/header.html}"></th:block>
 <section class="login" id="login">
     <div class="login-text text-center">
         <div class="login-form">
-            <h1 class="sign-in-header" >Sign in</h1>
-            <form method="POST">
+            <h1 class="sign-in-header">Sign in</h1>
+            <form th:method="post" th:action="@{/}">
                 <div class="login-form-field">
                     <input class="login-form-username" type="text" placeholder="Username" required>
                 </div>

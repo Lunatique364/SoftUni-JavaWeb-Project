@@ -4,9 +4,13 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import softuni.bg.iLearn.repository.UserRepository;
+import softuni.bg.iLearn.service.impl.UserDetailsServiceImpl;
 
 @Configuration
 public class SecurityConfiguration {
@@ -19,18 +23,18 @@ public class SecurityConfiguration {
                         //static resources are available to all
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         // home, login and register pages are available to all
-                        .requestMatchers("/", "/login", "/register").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/login-error").permitAll()
                         // other requests are being authenticated
                         .anyRequest().authenticated()
         ).formLogin(
                 formLogin -> {
                     formLogin
-                            //redirect when access is denied
                             .loginPage("/login")
                             .usernameParameter("email")
                             .passwordParameter("password")
                             .defaultSuccessUrl("/", true)
-                            .failureForwardUrl("/");
+                            //redirect when access is denied
+                            .failureForwardUrl("/login-error");
                 }
         ).logout(
                 logout -> {
@@ -44,8 +48,13 @@ public class SecurityConfiguration {
     }
 
     @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return new UserDetailsServiceImpl(userRepository);
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
 
 }
