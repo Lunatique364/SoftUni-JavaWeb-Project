@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import softuni.bg.iLearn.validation.UniqueUsername;
 import softuni.bg.iLearn.validation.ValidPassword;
 
 @NoArgsConstructor
@@ -16,6 +17,7 @@ public class RegisterUserDTO {
     @NotNull
     @Size(min = 3, max = 15)
     @NonNull
+    @UniqueUsername
     private String username;
     @NotNull
     @Email

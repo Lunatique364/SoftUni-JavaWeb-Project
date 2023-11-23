@@ -1,5 +1,6 @@
 package softuni.bg.iLearn.validation;
 
+
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -14,11 +15,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = PasswordConstraintValidator.class)
 @Target({ TYPE, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-public @interface ValidPassword {
+public @interface UniqueUsername {
 
-    String message() default "Invalid password.";
-
+    String message() default "Username already exists.";
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }

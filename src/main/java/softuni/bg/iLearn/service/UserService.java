@@ -6,4 +6,6 @@ import softuni.bg.iLearn.dto.RegisterUserDTO;
 public interface UserService {
 
     boolean register(RegisterUserDTO registerUserDTO);
+
+    boolean isUniqueUsername(String username);
 }
