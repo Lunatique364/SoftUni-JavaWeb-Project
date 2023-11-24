@@ -13,6 +13,11 @@
           <input id="username" class="register-form-username" th:field="*{username}" type="text" placeholder="Username" required>
           <div class="error"></div>
         </div>
+        <ul class="text-danger" th:each="error: ${#fields.errors('username')}">
+          <li th:each="message : ${error.split(',')}">
+            <p class="error-message" th:text="${message}"></p>
+          </li>
+        </ul>
         <div class="register-form-field">
           <input id="email" class="register-form-email" th:field="*{email}" type="email" placeholder="E-mail" required>
           <span class="error"></span>
@@ -20,13 +25,13 @@
         <div class="register-form-field">
           <input id="password" class="register-form-password" th:field="*{password}" type="password" placeholder="Password" required>
           <span class="error"></span>
-
         </div>
         <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
           <li th:each="message : ${error.split(',')}">
             <p class="error-message" th:text="${message}"></p>
           </li>
         </ul>
+
         <div class="register-form-field" autocomplete="off">
           <input id="confirmPassword" class="register-form-password" th:field="*{confirmPassword}" type="password" placeholder="Confirm password" required>
           <span class="error"></span>

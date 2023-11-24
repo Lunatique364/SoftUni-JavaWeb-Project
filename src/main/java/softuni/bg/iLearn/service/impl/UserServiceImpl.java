@@ -14,6 +14,9 @@ import softuni.bg.iLearn.service.MailService;
 import softuni.bg.iLearn.service.UserService;
 import softuni.bg.iLearn.utils.CommonMessages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.REGULAR);
+        user.setRoles(List.of(Role.REGULAR));
 
         MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT ,String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
 

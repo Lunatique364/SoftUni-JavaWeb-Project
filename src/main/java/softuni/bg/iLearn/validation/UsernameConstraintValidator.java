@@ -1,17 +1,14 @@
 package softuni.bg.iLearn.validation;
 
-import com.mysql.cj.xdevapi.Result;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import softuni.bg.iLearn.service.UserService;
 
-import java.util.Arrays;
-
-import static org.attoparser.ParseException.message;
 
 public class UsernameConstraintValidator implements ConstraintValidator<UniqueUsername, String> {
 
     private final UserService userService;
+    private String message;
 
 
     public UsernameConstraintValidator(UserService userService) {
@@ -19,19 +16,20 @@ public class UsernameConstraintValidator implements ConstraintValidator<UniqueUs
     }
 
     @Override
-    public void initialize(UniqueUsername username) {
-//        ConstraintValidator.super.initialize(constraintAnnotation);
+    public void initialize(UniqueUsername constraintAnnotation) {
+        this.message = constraintAnnotation.message();
     }
 
     @Override
     public boolean isValid(String username, ConstraintValidatorContext context) {
 
-        if (userService.isUniqueUsername(username)) {
-            return true;
-
+        if (!userService.isUniqueUsername(username)) {
+            context.buildConstraintViolationWithTemplate(message)
+                    .addConstraintViolation()
+                    .disableDefaultConstraintViolation();
+            return false;
         }
-        //TODO
 
-        return false;
+        return true;
     }
 }

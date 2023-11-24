@@ -4,10 +4,14 @@ package softuni.bg.iLearn.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import softuni.bg.iLearn.model.enums.Gender;
 import softuni.bg.iLearn.model.enums.Role;
 
+import java.util.List;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -27,8 +31,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private List<Role> roles;
 
     @Column
     private String firstName;
@@ -95,11 +98,4 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }

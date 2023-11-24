@@ -17,8 +17,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
     public boolean isValid(String password, ConstraintValidatorContext context) {
 
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
-                new LengthRule(3, 15),
-                new WhitespaceRule()
+                new LengthRule(3, 15)
         ));
 
         RuleResult result = validator.validate(new PasswordData(password));

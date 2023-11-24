@@ -1,9 +1,12 @@
 package softuni.bg.iLearn.service.impl;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import softuni.bg.iLearn.model.User;
+import softuni.bg.iLearn.model.enums.Role;
 import softuni.bg.iLearn.repository.UserRepository;
 
 import java.util.List;
@@ -31,6 +34,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .password(user.getPassword())
                 .authorities(List.of()) // TODO add roles
                 .build();
+    }
+
+    private static GrantedAuthority map(Role role) {
+        return new SimpleGrantedAuthority(
+                "ROLE_" + role.name()
+        );
     }
 
 
