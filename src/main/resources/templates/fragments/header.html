@@ -20,6 +20,11 @@
               <a class="nav-link">Logout</a>
             </form>
           </li>
+          <li>
+            <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/profile}">
+              <a class="nav-link">My Profile</a>
+            </form>
+          </li>
           <li><a class="nav-link" href="/login">Login</a></li>
           <li><a class="nav-link" href="/register">Register</a></li>
         </ul>
