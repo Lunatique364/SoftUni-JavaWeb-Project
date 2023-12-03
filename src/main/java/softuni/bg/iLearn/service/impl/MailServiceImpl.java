@@ -4,6 +4,7 @@ package softuni.bg.iLearn.service.impl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -24,19 +25,22 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendMail(MailDetails mailDetails) {
 
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessage message = mailSender.createMimeMessage();
+
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message);
 
         try {
-            mimeMessage.setSubject(mailDetails.getSubject());
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-            helper.setFrom(mailDetails.getSender());
-            helper.setTo(mailDetails.getRecipient());
-            helper.setText(mailDetails.getMessage(), true);
-            mailSender.send(mimeMessage);
+            mimeMessageHelper.setFrom(mailDetails.getSender());
+            mimeMessageHelper.setTo(mailDetails.getRecipient());
+            mimeMessageHelper.setSubject(mailDetails.getSubject());
+            mimeMessageHelper.setText(mailDetails.getMessage());
 
+            mailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+
+
 
     }
 }

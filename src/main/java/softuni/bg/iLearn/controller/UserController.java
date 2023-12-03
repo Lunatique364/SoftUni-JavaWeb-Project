@@ -15,12 +15,10 @@ import softuni.bg.iLearn.service.UserService;
 public class UserController {
 
     private final UserService userService;
-    private final MailService mailService;
 
     @Autowired
-    public UserController(UserService userService, MailService mailService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.mailService = mailService;
     }
 
     @PostMapping("/register")
@@ -36,4 +34,6 @@ public class UserController {
 
         return "redirect:/login";
     }
+
+
 }

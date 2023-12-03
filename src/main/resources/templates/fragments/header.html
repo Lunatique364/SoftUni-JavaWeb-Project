@@ -16,17 +16,21 @@
         <a href="/"><i class='bx bx-user'></i></a>
         <ul class = "dropdown">
           <li>
-            <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/logout}">
-              <a class="nav-link">Logout</a>
+            <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/profile}">
+              <a class="nav-link" th:href="@{/my-profile}">My Profile</a>
             </form>
           </li>
           <li>
-            <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/profile}">
-              <a class="nav-link">My Profile</a>
+            <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/logout}">
+              <button class="nav-link" type="submit">Logout</button>
             </form>
           </li>
-          <li><a class="nav-link" href="/login">Login</a></li>
-          <li><a class="nav-link" href="/register">Register</a></li>
+          <li sec:authorize="!isAuthenticated()">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li sec:authorize="!isAuthenticated()">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
         </ul>
       </li>
       <li><a href="#"><i class='bx bx-cart'></i></a></li>

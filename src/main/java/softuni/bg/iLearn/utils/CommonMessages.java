@@ -4,6 +4,8 @@ public class CommonMessages {
 
     public static final String EMAIL_CREATION_SUBJECT = "Welcome to iLearn!";
     public static final String EMAIL_SENDER = "alerts.ilearn@gmail.com";
+    public static final String EMAIL_ADMIN = "admin@ilearn.com";
+    public static final String EMAIL_PASSWORD = "admin";
     public static final String EMAIL_CREATION_BODY = """
             <!DOCTYPE html>
             <html>
@@ -21,5 +23,5 @@ public class CommonMessages {
             </body>
             </html>
             """;
-
+    public static final String USER_DOESNT_EXIST = "User %s doesn't exist!";
 }

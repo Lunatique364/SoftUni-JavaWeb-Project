@@ -24,7 +24,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     open-in-view: false
     properties:
       hibernate:
@@ -43,14 +43,11 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: alerts.ilearn@gmail.com
-    password: umosnzrllzobcdll
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-      protocol: smtp
-      test-connection: false
+    username: ${EMAIL}
+    password: ${PASSWORD}
+    properties.mail:
+      smtp:
+        auth: true
+        starttls.enable: true
+
 

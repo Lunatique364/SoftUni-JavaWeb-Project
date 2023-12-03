@@ -446,3 +446,10 @@ footer{
     transition: all .40s ease;
 }
 
+.btn {
+    color: var(--text-color);;
+    background-color:var(--main-color);
+    border-color: var(--main-color);;
+    border-radius: 25px;
+}
+

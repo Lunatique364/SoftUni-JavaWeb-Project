@@ -8,12 +8,12 @@
     <div class="login-text text-center">
         <div class="login-form">
             <h1 class="sign-in-header">Sign in</h1>
-            <form th:method="post" th:action="@{/}">
+            <form th:method="post" th:action="@{/login}">
                 <div class="login-form-field">
-                    <input class="login-form-username" type="text" placeholder="Username" required>
+                    <input name="username" class="login-form-username" type="text" placeholder="Username" required>
                 </div>
                 <div class="login-form-field">
-                    <input class="login-form-password" type="password" placeholder="Password" required>
+                    <input name="password" class="login-form-password" type="password" placeholder="Password" required>
                 </div>
                 <div class="forgot-password">Forgot Password?</div>
                 <input class="login-button" type="submit" value="Login">

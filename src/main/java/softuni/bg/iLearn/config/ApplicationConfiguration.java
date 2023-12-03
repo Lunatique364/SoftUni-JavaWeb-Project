@@ -12,6 +12,4 @@ public class ApplicationConfiguration {
         return new ModelMapper();
     }
 
-
-
 }

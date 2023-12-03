@@ -3,18 +3,20 @@ package softuni.bg.iLearn.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import softuni.bg.iLearn.dto.RegisterUserDTO;
 import softuni.bg.iLearn.model.MailDetails;
 import softuni.bg.iLearn.model.User;
 import softuni.bg.iLearn.model.enums.Role;
+import softuni.bg.iLearn.model.view.ProfileView;
 import softuni.bg.iLearn.repository.UserRepository;
 import softuni.bg.iLearn.service.MailService;
 import softuni.bg.iLearn.service.UserService;
 import softuni.bg.iLearn.utils.CommonMessages;
 
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -44,10 +46,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.REGULAR);
 
-        MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT ,String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
+        MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT, String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
 
-//        TODO fix NoSuchMethodEx while sending email
-//        mailService.sendMail(mailDetails);
+        mailService.sendMail(mailDetails);
         userRepository.save(user);
         return true;
     }
@@ -57,7 +58,29 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username).isEmpty();
     }
 
+    @Override
+    public ProfileView getProfileView(UserDetails userDetails) {
+        return userRepository
+                .findByUsername(userDetails.getUsername())
+                .map(this::toProfileView)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(CommonMessages.USER_DOESNT_EXIST, userDetails.getUsername())));
+    }
 
+    private ProfileView toProfileView(User user) {
+        return ProfileView.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .gender(user.getGender())
+                .courses(user.getCourses())
+                .website(user.getWebsite())
+                .twitter(user.getTwitter())
+                .instagram(user.getInstagram())
+                .facebook(user.getFacebook())
+                .headline(user.getHeadline())
+                .build();
+    }
 
 
 }
