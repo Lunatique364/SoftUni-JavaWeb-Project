@@ -113,7 +113,7 @@
     const confirmPassword = document.getElementById("confirmPassword");
 
 
-    username.addEventListener("input", (event) => {
+    username.addEventListener("submit", (event) => {
 
         var usernameValue = document.getElementById("username").value;
 
@@ -126,7 +126,7 @@
 
     });
 
-    email.addEventListener("input", event => {
+    email.addEventListener("submit", (event) => {
 
         if (email.validity.typeMismatch) {
             email.setCustomValidity("Please enter a valid e-mail address!");
@@ -136,7 +136,7 @@
 
     });
 
-    password.addEventListener("input", event => {
+    password.addEventListener("submit", event => {
 
         var passwordValue = document.getElementById("password").value;
 
@@ -150,7 +150,7 @@
     });
 
 
-    confirmPassword.addEventListener("input", event => {
+    confirmPassword.addEventListener("submit", event => {
 
         var passwordValue = document.getElementById("password").value;
         var confirmPasswordValue = document.getElementById("confirmPassword").value;

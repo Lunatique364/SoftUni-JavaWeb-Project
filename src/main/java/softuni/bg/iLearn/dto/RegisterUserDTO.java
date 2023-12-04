@@ -8,7 +8,8 @@ import lombok.*;
 import softuni.bg.iLearn.model.enums.Gender;
 import softuni.bg.iLearn.validation.UniqueUsername;
 import softuni.bg.iLearn.validation.ValidPassword;
-
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterUserDTO {
