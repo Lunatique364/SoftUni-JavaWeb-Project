@@ -21,6 +21,8 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    //TODO - @AuthenticationPrincipal or like this?
     @PostMapping("/register")
     public String postRegister(@Valid RegisterUserDTO registerUserDTO,
                                BindingResult bindingResult,

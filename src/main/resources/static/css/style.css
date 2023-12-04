@@ -89,6 +89,16 @@ header{
     text-align: center;
     font-size: 20px;
 }
+.header-icons ul li button{
+    display: block;
+    padding: 10px 20px;
+    color: var(--main-color);
+    text-decoration: none;
+    text-align: center;
+    background-color: white;
+    border: none;
+    font-size: 20px;
+}
 .header-icons ul li ul{
     display: none;
     position: absolute;
@@ -111,6 +121,16 @@ header{
 }
 
 .header-icons ul li ul li a:hover{
+    background-color: var(--second-color);
+    color: white;
+    border-radius: 30px;
+}
+
+.header-icons ul li ul li button{
+    padding: 10px 10px;
+}
+
+.header-icons ul li ul li button:hover{
     background-color: var(--second-color);
     color: white;
     border-radius: 30px;

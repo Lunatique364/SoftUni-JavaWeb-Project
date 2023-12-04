@@ -3,11 +3,173 @@
       xmlns:th="http://www.thymeleaf.org/">
 <head>
     <th:block th:replace="~{fragments/head.html}"></th:block>
-    <link rel="stylesheet" th:href="@{/css/my-profile.css}">
+    <link rel="stylesheet" th:href="@{/css/edit-profile.css}">
 </head>
 <body>
-<th:block th:replace="~{fragments/header.html}"></th:block>
 
+<th:block th:replace="~{fragments/header.html}"></th:block>
+<section class="edit-profile" id="edit-profile">
+    <div class="edit-profile-text text-center">
+        <div class="edit-profile-form--wrapper">
+            <h1 class="register-header" >Edit Profile</h1>
+            <form th:action="@{/edit-profile}" th:method="POST" th:object="${editProfileDTO}" id="edit-profile-form">
+                <div class="edit-profile-form-field">
+                    <p>First Name</p>
+                    <input id="firstName" class="edit-profile-form-email" th:field="*{firstName}" type="text" placeholder="First Name">
+                    <span class="error"></span>
+                </div>
+                <div class="edit-profile-form-field">
+                    <p>Last Name</p>
+                    <input id="lastName" class="edit-profile-form-email" th:field="*{lastName}" type="text" placeholder="Last Name">
+                    <span class="error"></span>
+                </div>
+                <div class="edit-profile-form-field">
+                    <p>New E-mail</p>
+                    <input id="email" class="edit-profile-form-email" th:field="*{email}" type="email" placeholder="E-mail">
+                    <span class="error"></span>
+                </div>
+                <div class="edit-profile-form-field" autocomplete="off">
+                    <p>Confirm E-mail</p>
+                    <input id="confirm-email" class="edit-profile-form-email" th:field="*{confirmEmail}" type="email" placeholder="Confirm e-mail">
+                    <span class="error"></span>
+                </div>
+                <div class="edit-profile-form-field">
+                    <p>Password</p>
+                    <input id="password" class="edit-profile-form-password" th:field="*{password}" type="password" placeholder="Password">
+                    <span class="error"></span>
+                </div>
+
+                <div class="edit-profile-form-field" autocomplete="off">
+                    <p>Confirm Password</p>
+                    <input id="confirmPassword" class="edit-profile-form-password" th:field="*{confirmPassword}" type="password" placeholder="Confirm password">
+                    <span class="error"></span>
+                </div>
+                <div class="edit-profile-form-field" autocomplete="off">
+                    <p>Gender</p>
+                    <div class="select-menu">
+                        <div class="select-btn">
+                            <span class="sBtn-text">Select your option</span>
+                            <i class="bx bx-chevron-down"></i>
+                        </div>
+                        <ul class="options">
+                            <li class="option">
+                                <i class="bx bx-male-sign"></i>
+                                <span th:field="*{gender}" class="option-text">Male</span>
+                            </li>
+                            <li class="option">
+                                <i class="bx bx-female-sign" ></i>
+                                <span th:field="*{gender}" class="option-text">Female</span>
+                            </li>
+                            <li class="option">
+                                <i class="bx bx-radio-circle"></i>
+                                <span th:field="*{gender}" class="option-text">Other</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="edit-profile-form-field">
+                    <p>Website</p>
+                    <input id="website" class="edit-profile-form-media" th:field="*{website}" type="text" placeholder="Website">
+                    <span class="error"></span>
+                </div>
+                <div class="edit-profile-form-field">
+                    <p>Twitter</p>
+                    <input id="twitter" class="edit-profile-form-media" th:field="*{twitter}" type="text" placeholder="Twitter">
+                    <span class="error"></span>
+                </div>
+                <div class="edit-profile-form-field">
+                    <p>Instagram</p>
+                    <input id="instagram" class="edit-profile-form-media" th:field="*{instagram}" type="text" placeholder="Instagram">
+                    <span class="error"></span>
+                </div>
+                <div class="edit-profile-form-field">
+                    <p>Facebook</p>
+                    <input id="facebook" class="edit-profile-form-media" th:field="*{facebook}" type="text" placeholder="Facebook">
+                    <span class="error"></span>
+                </div>
+                <input name="submit-button" class="edit-profile-button" type="submit" value="Save">
+            </form>
+        </div>
+    </div>
+</section>
 <th:block th:replace="~{fragments/footer.html}"></th:block>
+<script type="text/javascript">
+    const optionMenu = document.querySelector(".select-menu"),
+        selectBtn = optionMenu.querySelector(".select-btn"),
+        options = optionMenu.querySelectorAll(".option"),
+        sBtn_text = optionMenu.querySelector(".sBtn-text");
+    selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
+    options.forEach(option =>{
+        option.addEventListener("click", ()=>{
+            let selectedOption = option.querySelector(".option-text").innerText;
+            sBtn_text.innerText = selectedOption;
+            optionMenu.classList.remove("active");
+        });
+    });
+
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+
+
+    username.addEventListener("input", (event) => {
+
+        var usernameValue = document.getElementById("username").value;
+
+        if (usernameValue.length < 3 || usernameValue.length > 15) {
+            event.preventDefault();
+            username.setCustomValidity("Username should be between 3 and 15 characters!")
+        } else {
+            username.setCustomValidity("");
+        }
+
+    });
+
+    email.addEventListener("input", event => {
+
+        if (email.validity.typeMismatch) {
+            email.setCustomValidity("Please enter a valid e-mail address!");
+        } else {
+            email.setCustomValidity("");
+        }
+
+    });
+
+    password.addEventListener("input", event => {
+
+        var passwordValue = document.getElementById("password").value;
+
+        if (passwordValue.length < 3 || passwordValue.length > 15) {
+            event.preventDefault();
+            password.setCustomValidity("Password must be between 3 and 15 characters!");
+        } else {
+            password.setCustomValidity("");
+        }
+
+    });
+
+
+    confirmPassword.addEventListener("input", event => {
+
+        var passwordValue = document.getElementById("password").value;
+        var confirmPasswordValue = document.getElementById("confirmPassword").value;
+
+        if (confirmPasswordValue.length < 3 || confirmPasswordValue.length > 15) {
+            event.preventDefault();
+            password.setCustomValidity("Password must be between 3 and 15 characters!");
+        } else {
+            password.setCustomValidity("");
+        }
+
+        if (passwordValue !== confirmPasswordValue) {
+            event.preventDefault();
+            confirmPassword.setCustomValidity("Passwords should match!")
+        } else {
+            confirmPassword.setCustomValidity("");
+        }
+
+    });
+</script>
 </body>
 </html>

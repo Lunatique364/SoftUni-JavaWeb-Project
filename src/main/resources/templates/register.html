@@ -63,8 +63,7 @@
 
     if (usernameValue.length < 3 || usernameValue.length > 15) {
       event.preventDefault();
-      alert("Username should be between 3 and 15 characters!");
-      // username.setCustomValidity("Username should be between 3 and 15 characters!")
+      username.setCustomValidity("Username should be between 3 and 15 characters!")
     } else {
       username.setCustomValidity("");
     }
@@ -87,7 +86,7 @@
 
     if (passwordValue.length < 3 || passwordValue.length > 15) {
       event.preventDefault();
-      password.setCustomValidity("Password must be between 3 and 15 characters! HAHA");
+      password.setCustomValidity("Password must be between 3 and 15 characters!");
     } else {
       password.setCustomValidity("");
     }

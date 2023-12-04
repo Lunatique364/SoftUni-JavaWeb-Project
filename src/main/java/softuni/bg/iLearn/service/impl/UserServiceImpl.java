@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import softuni.bg.iLearn.dto.EditProfileDTO;
 import softuni.bg.iLearn.dto.RegisterUserDTO;
 import softuni.bg.iLearn.model.MailDetails;
 import softuni.bg.iLearn.model.User;
@@ -64,6 +65,13 @@ public class UserServiceImpl implements UserService {
                 .findByUsername(userDetails.getUsername())
                 .map(this::toProfileView)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(CommonMessages.USER_DOESNT_EXIST, userDetails.getUsername())));
+    }
+
+    @Override
+    public boolean editProfile(EditProfileDTO editProfileDTO) {
+        
+
+        return true;
     }
 
     private ProfileView toProfileView(User user) {
