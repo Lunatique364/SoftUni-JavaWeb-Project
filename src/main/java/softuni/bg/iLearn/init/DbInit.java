@@ -15,13 +15,8 @@ public class DbInit implements ApplicationRunner {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-//    @Value("${spring.mail.properties.mail.credentials.admin-username}")
-//    private static String ADMIN_EMAIL;
-//
-//    @Value("${spring.mail.properties.mail.credentials.admin-password}")
-//    private static String ADMIN_PASSWORD;
     private final User admin = new User();
+    private final User user = new User();
 
     @Autowired
     public DbInit(UserRepository userRepository, PasswordEncoder passwordEncoder) {

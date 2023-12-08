@@ -10,15 +10,17 @@
             <h1 class="sign-in-header">Sign in</h1>
             <form th:method="post" th:action="@{/login}">
                 <div class="login-form-field">
-                    <input name="username" class="login-form-username" type="text" placeholder="Username" required>
+                    <input name="username" class="login-form-username" type="text" placeholder="Username" required autocomplete="off">
                 </div>
                 <div class="login-form-field">
                     <input name="password" class="login-form-password" type="password" placeholder="Password" required>
                 </div>
-                <div class="forgot-password">Forgot Password?</div>
+                <div class="forgot-password-link">
+                    <a th:href="@{/forgot-password}">Forgot Password?</a>
+                </div>
                 <input class="login-button" type="submit" value="Login">
                 <div class="register-link">
-                    Not a member? <a href="/register">Join us!</a>
+                    Not a member? <a th:href="@{/register}">Join us!</a>
                 </div>
             </form>
         </div>

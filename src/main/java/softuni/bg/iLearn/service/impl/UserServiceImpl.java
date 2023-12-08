@@ -9,14 +9,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import softuni.bg.iLearn.dto.EditProfileDTO;
 import softuni.bg.iLearn.dto.RegisterUserDTO;
+import softuni.bg.iLearn.dto.ResetPasswordDTO;
 import softuni.bg.iLearn.model.MailDetails;
 import softuni.bg.iLearn.model.User;
+import softuni.bg.iLearn.model.enums.Gender;
 import softuni.bg.iLearn.model.enums.Role;
 import softuni.bg.iLearn.model.view.ProfileView;
 import softuni.bg.iLearn.repository.UserRepository;
 import softuni.bg.iLearn.service.MailService;
 import softuni.bg.iLearn.service.UserService;
 import softuni.bg.iLearn.utils.CommonMessages;
+
+import java.util.Optional;
 
 
 @Service
@@ -46,10 +50,9 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.REGULAR);
-
         MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT, String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
 
-        mailService.sendMail(mailDetails);
+        mailService.sendRegistrationMail(mailDetails);
         userRepository.save(user);
         return true;
     }
@@ -68,11 +71,51 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean editProfile(EditProfileDTO editProfileDTO) {
-        
+    public boolean editProfile(EditProfileDTO editProfileDTO, String username) {
+
+        User user = userRepository.findByUsername(username).get();
+
+        editUser(user, editProfileDTO);
+
+        userRepository.save(user);
 
         return true;
     }
+
+    @Override
+    public boolean resetPassword(ResetPasswordDTO resetPasswordDTO) {
+
+        User user = userRepository.findByEmail(resetPasswordDTO.getEmail()).orElse(null);
+
+        if (user == null) {
+            return false;
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.REGULAR);
+        MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT, String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
+
+        mailService.sendRegistrationMail(mailDetails);
+        userRepository.save(user);
+        return true;
+    }
+
+    private void editUser(User user, EditProfileDTO editProfileDTO) {
+        //TODO think of better way
+
+        user.setFirstName(editProfileDTO.getFirstName().isEmpty() ? user.getFirstName() : editProfileDTO.getFirstName());
+        user.setLastName(editProfileDTO.getLastName().isEmpty() ? user.getLastName() : editProfileDTO.getLastName());
+        Optional<Gender> gender = Optional.ofNullable(editProfileDTO.getGender());
+        user.setEmail(editProfileDTO.getEmail().isEmpty() ? user.getEmail() : editProfileDTO.getEmail());
+        user.setGender(gender.isEmpty() ? user.getGender() : editProfileDTO.getGender());
+        user.setWebsite(editProfileDTO.getWebsite().isEmpty() ? user.getWebsite() : editProfileDTO.getWebsite());
+        user.setTwitter(editProfileDTO.getTwitter().isEmpty() ? user.getTwitter() : editProfileDTO.getTwitter());
+        user.setFacebook(editProfileDTO.getFacebook().isEmpty() ? user.getFacebook() : editProfileDTO.getFacebook());
+        user.setInstagram(editProfileDTO.getInstagram().isEmpty() ? user.getInstagram() : editProfileDTO.getInstagram());
+        user.setHeadline(editProfileDTO.getHeadline().isEmpty() ? user.getHeadline() : editProfileDTO.getHeadline());
+
+    }
+
 
     private ProfileView toProfileView(User user) {
         return ProfileView.builder()

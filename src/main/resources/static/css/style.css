@@ -209,13 +209,13 @@ section {
     outline: none;
 }
 
-.forgot-password{
+.forgot-password-link{
     width: 40%;
     margin: -5px 0 20px 5px;
     color: var(--second-color);
     cursor: pointer;
 }
-.forgot-password:hover{
+.forgot-password-link:hover{
   text-decoration: underline;
     color: var(--second-color);
 }
@@ -317,7 +317,7 @@ section {
 
 .about-us{
     position: relative;
-    height: 150vh;
+    height: 160vh;
     width: 100%;
     background-color: white;
     gap: 1rem;

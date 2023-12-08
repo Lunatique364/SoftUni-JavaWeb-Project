@@ -3,13 +3,17 @@ package softuni.bg.iLearn.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuni.bg.iLearn.dto.RegisterUserDTO;
 import softuni.bg.iLearn.service.MailService;
 import softuni.bg.iLearn.service.UserService;
+import softuni.bg.iLearn.service.impl.UserDetailsServiceImpl;
 
 @Controller
 public class UserController {
@@ -21,8 +25,16 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ModelAttribute("registerUserDTO")
+    public RegisterUserDTO initUser() {
+        return new RegisterUserDTO();
+    }
 
-    //TODO - @AuthenticationPrincipal or like this?
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register";
+    }
+
     @PostMapping("/register")
     public String postRegister(@Valid RegisterUserDTO registerUserDTO,
                                BindingResult bindingResult,

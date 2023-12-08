@@ -33,17 +33,6 @@
                     <input id="confirm-email" class="edit-profile-form-email" th:field="*{confirmEmail}" type="email" placeholder="Confirm e-mail">
                     <span class="error"></span>
                 </div>
-                <div class="edit-profile-form-field">
-                    <p>Password</p>
-                    <input id="password" class="edit-profile-form-password" th:field="*{password}" type="password" placeholder="Password">
-                    <span class="error"></span>
-                </div>
-
-                <div class="edit-profile-form-field" autocomplete="off">
-                    <p>Confirm Password</p>
-                    <input id="confirmPassword" class="edit-profile-form-password" th:field="*{confirmPassword}" type="password" placeholder="Confirm password">
-                    <span class="error"></span>
-                </div>
                 <div class="edit-profile-form-field" autocomplete="off">
                     <p>Gender</p>
                     <div class="select-menu">
@@ -87,6 +76,11 @@
                     <input id="facebook" class="edit-profile-form-media" th:field="*{facebook}" type="text" placeholder="Facebook">
                     <span class="error"></span>
                 </div>
+                <div class="edit-profile-form-field">
+                    <p>Facebook</p>
+                    <input id="headline" class="edit-profile-form-media" th:field="*{headline}" type="text" placeholder="Headline">
+                    <span class="error"></span>
+                </div>
                 <input name="submit-button" class="edit-profile-button" type="submit" value="Save">
             </form>
         </div>
@@ -117,22 +111,34 @@
 
         var usernameValue = document.getElementById("username").value;
 
-        if (usernameValue.length < 3 || usernameValue.length > 15) {
-            event.preventDefault();
-            username.setCustomValidity("Username should be between 3 and 15 characters!")
+        if (usernameValue.length === 0) {
+
         } else {
-            username.setCustomValidity("");
+            if (usernameValue.length < 3 || usernameValue.length > 15) {
+                event.preventDefault();
+                username.setCustomValidity("Username should be between 3 and 15 characters!")
+            } else {
+                username.setCustomValidity("");
+            }
         }
+
+
 
     });
 
     email.addEventListener("submit", (event) => {
 
-        if (email.validity.typeMismatch) {
-            email.setCustomValidity("Please enter a valid e-mail address!");
+        if (email.innerText.length=== 0) {
+
         } else {
-            email.setCustomValidity("");
+            if (email.validity.typeMismatch) {
+                email.setCustomValidity("Please enter a valid e-mail address!");
+            } else {
+                email.setCustomValidity("");
+            }
         }
+
+
 
     });
 
@@ -140,12 +146,17 @@
 
         var passwordValue = document.getElementById("password").value;
 
-        if (passwordValue.length < 3 || passwordValue.length > 15) {
-            event.preventDefault();
-            password.setCustomValidity("Password must be between 3 and 15 characters!");
+        if (passwordValue.length === 0) {
+
         } else {
-            password.setCustomValidity("");
+            if (passwordValue.length < 3 || passwordValue.length > 15) {
+                event.preventDefault();
+                password.setCustomValidity("Password must be between 3 and 15 characters!");
+            } else {
+                password.setCustomValidity("");
+            }
         }
+
 
     });
 
@@ -155,19 +166,27 @@
         var passwordValue = document.getElementById("password").value;
         var confirmPasswordValue = document.getElementById("confirmPassword").value;
 
-        if (confirmPasswordValue.length < 3 || confirmPasswordValue.length > 15) {
-            event.preventDefault();
-            password.setCustomValidity("Password must be between 3 and 15 characters!");
+        if (passwordValue.length === 0 && confirmPasswordValue === 0) {
+
         } else {
-            password.setCustomValidity("");
+            if (confirmPasswordValue.length < 3 || confirmPasswordValue.length > 15) {
+                event.preventDefault();
+                password.setCustomValidity("Password must be between 3 and 15 characters!");
+            } else {
+                password.setCustomValidity("");
+            }
+
+            if (passwordValue !== confirmPasswordValue) {
+                event.preventDefault();
+                confirmPassword.setCustomValidity("Passwords should match!")
+            } else {
+                confirmPassword.setCustomValidity("");
+            }
         }
 
-        if (passwordValue !== confirmPasswordValue) {
-            event.preventDefault();
-            confirmPassword.setCustomValidity("Passwords should match!")
-        } else {
-            confirmPassword.setCustomValidity("");
-        }
+
+
+
 
     });
 </script>

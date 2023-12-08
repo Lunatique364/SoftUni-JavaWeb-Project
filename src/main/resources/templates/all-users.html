@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="~{fragments/head.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/all-users.css}">
+</head>
+<body>
+
+<th:block th:replace="~{fragments/header.html}"></th:block>
+<div class="container" th:action="@{/all-users}" th:method="POST" th:object="${allUsersView}" >
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive">
+                        <table class="table user-list">
+                            <thead>
+                            <tr>
+                                <th><span>User</span></th>
+                                <th class="text-center"><span>Status</span></th>
+                                <th><span>Full Name</span></th>
+                                <th><span>Email</span></th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${allUsersView.getAllUsers()}">
+                                <td >
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
+                                    <a th:text="${user.username}" href="#" class="user-link">Username</a>
+                                    <span th:text="${user.role}" class="user-subhead">Role</span>
+                                </td>
+                                <td>2013/08/12</td>
+                                <td class="text-center">
+                                    <span th:text="${user.firstName} + ' ' + ${user.lastName}" class="label label-default">Full name</span>
+                                </td>
+                                <td>
+                                    <a th:text="${user.email}" href="#">email</a>
+                                </td>
+                                <td>
+                                    <a href="#" class="table-link text-warning">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class='bx bx-search-alt-2'></i>
+                                            </span>
+                                    </a>
+                                    <a href="#" class="table-link text-info">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class='bx bx-edit-alt' ></i>
+                                            </span>
+                                    </a>
+                                    <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class='bx bx-trash' ></i>
+                                            </span>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/footer.html}"></th:block>
+</body>

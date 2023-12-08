@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,9 @@ import softuni.bg.iLearn.dto.EditProfileDTO;
 import softuni.bg.iLearn.dto.RegisterUserDTO;
 import softuni.bg.iLearn.model.view.ProfileView;
 import softuni.bg.iLearn.service.UserService;
+import softuni.bg.iLearn.service.impl.UserDetailsServiceImpl;
+
+import java.security.Principal;
 
 @Controller
 public class MyProfileController {
@@ -45,18 +49,20 @@ public class MyProfileController {
     public EditProfileDTO initUser() {
         return new EditProfileDTO();
     }
+
+
     @PostMapping("/edit-profile")
     public String postRegister(@Valid EditProfileDTO editProfileDTO,
                                BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors() || !userService.editProfile(editProfileDTO)) {
+                               RedirectAttributes redirectAttributes,
+                               @AuthenticationPrincipal UserDetails userDetails) {
+        if (bindingResult.hasErrors() || !userService.editProfile(editProfileDTO, userDetails.getUsername())) {
             redirectAttributes.addFlashAttribute("editProfileDTO", editProfileDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfileDTO", bindingResult);
             return "redirect:/edit-profile";
         }
 
-
-        return "redirect:/";
+        return "redirect:/my-profile";
     }
 
 }

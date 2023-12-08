@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 import softuni.bg.iLearn.model.enums.Gender;
-import softuni.bg.iLearn.validation.UniqueUsername;
 import softuni.bg.iLearn.validation.ValidPassword;
 
 @Getter
@@ -20,14 +20,14 @@ public class EditProfileDTO {
     private String email;
     @Email
     private String confirmEmail;
-    @ValidPassword
-    private String password;
-    @ValidPassword
-    private String confirmPassword;
     private Gender gender;
+    @URL
     private String website;
+    @URL
     private String twitter;
+    @URL
     private String facebook;
+    @URL
     private String instagram;
     private String headline;
 

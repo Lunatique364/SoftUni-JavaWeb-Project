@@ -7,21 +7,25 @@ public class CommonMessages {
     public static final String EMAIL_ADMIN = "admin@ilearn.com";
     public static final String EMAIL_PASSWORD = "admin";
     public static final String EMAIL_CREATION_BODY = """
-            <!DOCTYPE html>
-            <html>
-            <body>         \s
-                <p>Welcome to iLearn!</p>
-                <br>
-                <p>Dear %s,</p>
-                <p>	We are glad to confirm that your account has been successfully created and you may now login with the credentials you provided.</p>
+            
+                Welcome to iLearn!
+
+                Dear %s,
+                We are glad to confirm that your account has been successfully created and you may now login with the credentials you provided.
                 	 
-                <p><b>Please note:</b> If you have any issues logging in or have forgotten your password you can reset it <a href="www.ilearn.com/forgot-password">here</a>.</p>
-                <p> Don't forget to subscribe to our weekly newsletter and find our newest courses!</p>
-                <br>
+                Please note: If you have any issues logging in or have forgotten your password you can reset it here: www.ilearn.com/forgot-password.
+                Don't forget to subscribe to our weekly newsletter and find our newest courses!
+                
  
-                <p>The iLearn Customer Service Team</p>
-            </body>
-            </html>
-            """;
+                The iLearn Customer Service Team
+""";
+
+    public static final String EMAIL_CONTACT_BODY = """
+            
+                From: %s
+                Contact email: %s
+                
+                Message: %s
+""";
     public static final String USER_DOESNT_EXIST = "User %s doesn't exist!";
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import softuni.bg.iLearn.model.enums.Role;
 import softuni.bg.iLearn.repository.UserRepository;
 import softuni.bg.iLearn.service.impl.UserDetailsServiceImpl;
 
@@ -21,11 +22,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
-                        //static resources are available to all
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        // home, login and register pages are available to all
-                        .requestMatchers("/", "/login", "/register", "/login-error").permitAll()
-                        // other requests are being authenticated
+                        .requestMatchers("/", "/login", "/register", "/login-error", "forgot-password").permitAll()
+                        .requestMatchers("/all-users").hasRole(Role.ADMIN.name())
                         .anyRequest().authenticated()
         ).formLogin(
                 formLogin -> {

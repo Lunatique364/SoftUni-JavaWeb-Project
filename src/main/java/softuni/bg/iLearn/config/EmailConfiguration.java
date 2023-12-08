@@ -11,7 +11,6 @@ import java.util.Properties;
 @Configuration
 public class EmailConfiguration {
 
-
     @Bean
     public JavaMailSender getJavaMailSender(@Value("${spring.mail.host}") String host,
                                             @Value("${spring.mail.port}") int port,

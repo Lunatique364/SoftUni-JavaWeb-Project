@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<th:block th:replace="~{fragments/head.html}"></th:block>
+
+	<link rel="stylesheet" type="text/css" href="/css/contact.css">
+<!--===============================================================================================-->
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html}"></th:block>
+	<div class="contact1">
+		<div class="container-contact1">
+			<div class="contact1-pic js-tilt" data-tilt>
+				<img src="/images/message.png" alt="IMG">
+			</div>
+
+			<form class="contact1-form validate-form" th:action="@{/contact}" th:method="POST" th:object="${contactDTO}">
+				<h1 class="contact1-form-title">
+					Message us
+				</h1>
+				<div class="wrap-input1 validate-input">
+					<input class="input1" type="text" name="name" placeholder="Name" required>
+					<span class="shadow-input1"></span>
+				</div>
+
+				<div class="wrap-input1 validate-input">
+					<input class="input1" type="email" name="email" placeholder="Email" required>
+					<span class="shadow-input1"></span>
+				</div>
+
+				<div class="wrap-input1 validate-input">
+					<input class="input1" type="text" name="subject" placeholder="Subject" required>
+					<span class="shadow-input1"></span>
+				</div>
+
+				<div class="wrap-input1 validate-input">
+					<textarea class="input1" name="message" placeholder="Message" required></textarea>
+					<span class="shadow-input1"></span>
+				</div>
+
+				<div class="container-contact1-form-btn">
+					<button class="contact1-form-btn" type="submit" onclick="show_alert()">
+						<span>
+							Send Email
+						</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+<th:block th:replace="~{fragments/footer.html}"></th:block>
+<script type="text/javascript">
+	function show_alert() {
+		alert("Message sent!");
+	}
+</script>
+</body>
+</html>
