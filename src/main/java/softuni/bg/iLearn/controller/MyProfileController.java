@@ -5,7 +5,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuni.bg.iLearn.dto.EditProfileDTO;
-import softuni.bg.iLearn.dto.RegisterUserDTO;
 import softuni.bg.iLearn.model.view.ProfileView;
 import softuni.bg.iLearn.service.UserService;
-import softuni.bg.iLearn.service.impl.UserDetailsServiceImpl;
-
-import java.security.Principal;
 
 @Controller
 public class MyProfileController {
@@ -52,7 +47,7 @@ public class MyProfileController {
 
 
     @PostMapping("/edit-profile")
-    public String postRegister(@Valid EditProfileDTO editProfileDTO,
+    public String postEdit(@Valid EditProfileDTO editProfileDTO,
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes,
                                @AuthenticationPrincipal UserDetails userDetails) {

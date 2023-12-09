@@ -20,6 +20,30 @@ public class CommonMessages {
                 The iLearn Customer Service Team
 """;
 
+    public static final String SUBSCRIPTION_EMAIL_BODY = """
+            
+                Hello Adventurer!
+
+                We are pleased to show you this week's top new courses available at iLearn!
+                
+                %s
+ 
+                The iLearn Customer Service Team
+""";
+
+    public static final String SUBSCRIPTION_EMAIL_SUBJECT = "Weekly Newsletter %s - iLearn";
+
+    public static final String RESET_EMAIL_BODY = """
+            
+                Hello Adventurer!
+
+                Your new password is:
+                %s
+ 
+                The iLearn Customer Service Team
+""";
+
+    public static final String RESET_EMAIL_SUBJECT = "Reset Password - iLearn";
     public static final String EMAIL_CONTACT_BODY = """
             
                 From: %s

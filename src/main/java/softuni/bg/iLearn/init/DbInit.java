@@ -10,6 +10,8 @@ import softuni.bg.iLearn.model.enums.Role;
 import softuni.bg.iLearn.repository.UserRepository;
 import softuni.bg.iLearn.utils.CommonMessages;
 
+import java.time.LocalDate;
+
 @Component
 public class DbInit implements ApplicationRunner {
 
@@ -32,6 +34,8 @@ public class DbInit implements ApplicationRunner {
             admin.setEmail(CommonMessages.EMAIL_ADMIN);
             admin.setPassword(passwordEncoder.encode(CommonMessages.EMAIL_PASSWORD));
             admin.setRole(Role.ADMIN);
+            admin.setJoined(LocalDate.now());
+
             userRepository.save(admin);
         }
 

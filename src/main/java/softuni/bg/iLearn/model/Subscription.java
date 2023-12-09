@@ -1,6 +1,6 @@
 package softuni.bg.iLearn.model;
 
-
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,10 +10,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MailDetails {
-    private String sender;
-    private String recipient;
-    private String subject;
-    private String message;
+@Entity
+@Table
+public class Subscription {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
+    private String email;
+
 
 }

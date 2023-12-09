@@ -7,12 +7,13 @@
     <li><a href="/categories">Categories</a></li>
     <li><a href="/courses">Courses</a></li>
     <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/all-users">Users</a></li>
-    <li><a class="nav-link" href="/about">About Us</a></li>
-    <li><a href="/contact">Contact</a></li>
+    <li sec:authorize="!hasRole('ROLE_ADMIN')"><a class="nav-link" href="/about">About Us</a></li>
+    <li sec:authorize="!hasRole('ROLE_ADMIN')"><a href="/contact">Contact</a></li>
   </ul>
   <div class="header-icons">
     <ul>
-      <li><a href="#"><i class='bx bx-heart'></i></a></li>
+      <li th:if="${#authorization.expression('isAuthenticated()')}"><a href="/my-courses"><i class='bx bx-heart'></i></a></li>
+      <li th:unless="${#authorization.expression('isAuthenticated()')}"><a href="/login"><i class='bx bx-heart'></i></a></li>
       <li>
         <a href="/"><i class='bx bx-user'></i></a>
         <ul class = "dropdown">
@@ -34,7 +35,8 @@
           </li>
         </ul>
       </li>
-      <li><a href="#"><i class='bx bx-cart'></i></a></li>
+      <li th:if="${#authorization.expression('isAuthenticated()')}"><a href="/my-cart"><i class='bx bx-cart'></i></a></li>
+      <li th:unless="${#authorization.expression('isAuthenticated()')}"><a href="/login"><i class='bx bx-cart'></i></a></li>
     </ul>
   </div>
 </header>

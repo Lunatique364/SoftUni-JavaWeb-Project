@@ -1,15 +1,11 @@
 package softuni.bg.iLearn.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import softuni.bg.iLearn.model.Course;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,11 +18,15 @@ import java.util.List;
 @Table(name = "weekly_newsletter")
 public class WeeklyNewsletter {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Transient
+    private List<Subscription> emails;
+
     @OneToMany
     private List<Course> courses;
     @DateTimeFormat
     private LocalDateTime date;
-
 
 }

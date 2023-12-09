@@ -26,6 +26,12 @@ public class LoginController {
         return "login";
     }
 
+    @PostMapping("/login-error")
+    public String loginError(RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("badCredentials", true);
+        return "redirect:/login";
+    }
+
     @GetMapping("/forgot-password")
     public String forgotPasswordPage() {
         return "forgot-password";

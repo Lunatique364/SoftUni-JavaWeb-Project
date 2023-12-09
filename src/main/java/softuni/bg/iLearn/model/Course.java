@@ -7,12 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import softuni.bg.iLearn.model.enums.Category;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "courses")
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,5 +30,7 @@ public class Course {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Column
+    private LocalDateTime dateAdded;
 
 }

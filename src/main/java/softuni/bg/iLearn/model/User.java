@@ -6,9 +6,11 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import softuni.bg.iLearn.model.enums.Gender;
 import softuni.bg.iLearn.model.enums.Role;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -56,6 +58,7 @@ public class User {
     private String instagram;
     @Column()
     private String headline;
-
-
+    @DateTimeFormat
+    @Column()
+    private LocalDate joined;
 }

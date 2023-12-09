@@ -2,6 +2,7 @@ package softuni.bg.iLearn.service.impl;
 
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +21,12 @@ import softuni.bg.iLearn.service.MailService;
 import softuni.bg.iLearn.service.UserService;
 import softuni.bg.iLearn.utils.CommonMessages;
 
+import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Service
@@ -50,6 +56,7 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.REGULAR);
+        user.setJoined(LocalDate.now());
         MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT, String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
 
         mailService.sendRegistrationMail(mailDetails);
@@ -91,13 +98,34 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.REGULAR);
-        MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT, String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
+        String newPassword = getNewRandomPassword();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.RESET_EMAIL_SUBJECT, String.format(CommonMessages.RESET_EMAIL_BODY, newPassword));
 
-        mailService.sendRegistrationMail(mailDetails);
+        mailService.sendResetPasswordMail(mailDetails);
         userRepository.save(user);
         return true;
+    }
+
+    @Override
+    public boolean deleteUserById(String id) {
+
+        User user = userRepository.findById(Long.parseLong(id)).orElse(null);
+
+        if (user == null) {
+            return false;
+        }
+
+        userRepository.delete(user);
+        return true;
+
+    }
+
+    private String getNewRandomPassword() {
+        Random random = new SecureRandom();
+        IntStream specialChars = random.ints(33, 45);
+        return specialChars.map(n -> (char) n).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 
     private void editUser(User user, EditProfileDTO editProfileDTO) {

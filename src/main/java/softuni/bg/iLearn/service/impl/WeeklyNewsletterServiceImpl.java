@@ -2,6 +2,8 @@ package softuni.bg.iLearn.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import softuni.bg.iLearn.dto.NewsletterSubscriptionDTO;
+import softuni.bg.iLearn.model.WeeklyNewsletter;
 import softuni.bg.iLearn.repository.WeeklyNewsletterRepository;
 import softuni.bg.iLearn.service.MailService;
 import softuni.bg.iLearn.service.WeeklyNewsletterService;
@@ -17,4 +19,15 @@ public class WeeklyNewsletterServiceImpl implements WeeklyNewsletterService {
         this.newsletterRepository = newsletterRepository;
         this.mailService = mailService;
     }
+
+
+    @Override
+    public WeeklyNewsletter getWeeklyNewsletter() {
+
+
+        return null;
+    }
+
+
+
 }

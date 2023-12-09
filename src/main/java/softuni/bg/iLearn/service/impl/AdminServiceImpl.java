@@ -2,6 +2,7 @@ package softuni.bg.iLearn.service.impl;
 
 import org.springframework.stereotype.Service;
 import softuni.bg.iLearn.model.User;
+import softuni.bg.iLearn.model.view.ProfileView;
 import softuni.bg.iLearn.repository.UserRepository;
 import softuni.bg.iLearn.service.AdminService;
 
@@ -20,4 +21,11 @@ public class AdminServiceImpl implements AdminService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public ProfileView getProfileView() {
+        return null;
+    }
+
+
 }

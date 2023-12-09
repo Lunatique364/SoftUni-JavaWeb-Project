@@ -7,14 +7,17 @@
 <body>
 <th:block th:replace="~{fragments/header.html}"></th:block>
 <section class="home" id="home">
-    <div class="home-text">
+    <div class="home-text" th:action="@{/}" th:method="POST" th:object="${newsletterSubscriptionDTO}">
         <h6>Best online learning platform</h6>
         <h1>Learn anything, anywhere!</h1>
         <p>Hone your skills and excel your career</p>
         <div class="newsletter">
             <form>
-                <input type="email" placeholder="Get our weekly newsletter!" required>
-                <input type="submit" value="Let's start!">
+                <input name="newsletter-email-input" type="email" placeholder="Get our weekly newsletter!" required>
+                <p th:if="${error}" style="color: red" th:text="${error}"></p>
+                <button type="submit" onclick="show_alert()">
+                    <span>Let's Start!</span>
+                </button>
             </form>
         </div>
     </div>
@@ -26,5 +29,10 @@
     </div>
 </section>
 <th:block th:replace="~{fragments/footer.html}"></th:block>
+<script type="text/javascript">
+    function show_alert() {
+        alert("Thank you for signing up for your weekly newsletter!");
+    }
+</script>
 </body>
 </html>

@@ -377,7 +377,7 @@ section {
     border: 2px solid var(--main-color);
     border-radius: 30px;
 }
-.newsletter form input:last-child{
+.newsletter form button{
     position: absolute;
     display: inline-block;
     border: none;

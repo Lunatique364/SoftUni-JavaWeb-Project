@@ -19,4 +19,5 @@ public interface UserService {
     boolean editProfile(EditProfileDTO editProfileDTO, String username);
     boolean resetPassword(ResetPasswordDTO resetPasswordDTO);
 
+    boolean deleteUserById(String id);
 }
