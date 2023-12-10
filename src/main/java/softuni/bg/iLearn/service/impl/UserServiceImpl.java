@@ -78,9 +78,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean editProfile(EditProfileDTO editProfileDTO, String username) {
+    public boolean editProfile(EditProfileDTO editProfileDTO, String value) {
+        User user;
 
-        User user = userRepository.findByUsername(username).get();
+        if (value.contains("@")) {
+            user = userRepository.findByUsername(value).get();
+        } else {
+            user = userRepository.findByEmail(value).get();
+        }
 
         editUser(user, editProfileDTO);
 
@@ -119,6 +124,11 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
         return true;
 
+    }
+
+    @Override
+    public ProfileView getProfileView(String id) {
+        return toProfileView(userRepository.findById(Long.valueOf(id)).get());
     }
 
     private String getNewRandomPassword() {

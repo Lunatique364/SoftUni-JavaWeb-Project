@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/head.html}"></th:block>
+</head>
+<body>
+
+<p th:text="${error}"></p>
+<img th:src="${imageURL}" alt="Error Image">
+
+</body>
+</html>

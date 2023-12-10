@@ -46,7 +46,7 @@
                                                 <i class='bx bx-search-alt-2'></i>
                                             </span>
                                     </a>
-                                    <a onclick="check()" th:method="post" th:href="@{/all-users}" class="table-link danger">
+                                    <a onclick="check()" th:method="post" th:href="@{/all-users}" th:object="${DeleteUserDTO}" class="table-link danger">
                                             <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class='bx bx-trash' ></i>

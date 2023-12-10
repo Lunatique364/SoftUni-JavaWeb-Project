@@ -20,4 +20,6 @@ public interface UserService {
     boolean resetPassword(ResetPasswordDTO resetPasswordDTO);
 
     boolean deleteUserById(String id);
+
+    ProfileView getProfileView(String id);
 }
