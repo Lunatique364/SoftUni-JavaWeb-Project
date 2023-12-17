@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Exception e, Model model) {
         model.addAttribute("error", "");
-        model.addAttribute("imageURL", "/images/oops1.jpg");
+        model.addAttribute("imageURL", "../images/oops1.jpg");
         return "error";
     }
 }

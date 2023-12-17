@@ -20,7 +20,7 @@ public class EditProfileDTO {
     private String email;
     @Email
     private String confirmEmail;
-    private Gender gender;
+    private String gender;
     @URL
     private String website;
     @URL

@@ -12,183 +12,88 @@
     <div class="edit-profile-text text-center">
         <div class="edit-profile-form--wrapper">
             <h1 class="register-header" >Edit Profile</h1>
-            <form th:action="@{/edit-profile}" th:method="POST" th:object="${editProfileDTO}" id="edit-profile-form">
+            <form th:action="@{/edit-profile/{username}(username=${username})}" th:method="POST" th:object="${editProfileDTO}" id="edit-profile-form">
                 <div class="edit-profile-form-field">
                     <p>First Name</p>
                     <input id="firstName" class="edit-profile-form-email" th:field="*{firstName}" type="text" placeholder="First Name">
-                    <span class="error"></span>
                 </div>
                 <div class="edit-profile-form-field">
                     <p>Last Name</p>
                     <input id="lastName" class="edit-profile-form-email" th:field="*{lastName}" type="text" placeholder="Last Name">
-                    <span class="error"></span>
                 </div>
                 <div class="edit-profile-form-field">
                     <p>New E-mail</p>
                     <input id="email" class="edit-profile-form-email" th:field="*{email}" type="email" placeholder="E-mail">
-                    <span class="error"></span>
                 </div>
+                <p th:if="${emailError}" style="color: red" th:text="${emailError}"></p>
                 <div class="edit-profile-form-field" autocomplete="off">
                     <p>Confirm E-mail</p>
                     <input id="confirm-email" class="edit-profile-form-email" th:field="*{confirmEmail}" type="email" placeholder="Confirm e-mail">
-                    <span class="error"></span>
                 </div>
+                <p th:if="${confirmEmailError}" style="color: red" th:text="${confirmEmailError}"></p>
                 <div class="edit-profile-form-field" autocomplete="off">
                     <p>Gender</p>
-                    <div class="select-menu">
-                        <div class="select-btn">
-                            <span class="sBtn-text">Select your option</span>
-                            <i class="bx bx-chevron-down"></i>
-                        </div>
-                        <ul class="options">
-                            <li class="option">
-                                <i class="bx bx-male-sign"></i>
-                                <span th:field="*{gender}" class="option-text">Male</span>
-                            </li>
-                            <li class="option">
-                                <i class="bx bx-female-sign" ></i>
-                                <span th:field="*{gender}" class="option-text">Female</span>
-                            </li>
-                            <li class="option">
-                                <i class="bx bx-radio-circle"></i>
-                                <span th:field="*{gender}" class="option-text">Other</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <input id="gender" class="edit-profile-form-gender" th:field="*{gender}" type="text" placeholder="Male, Female or Other">
                 </div>
+                <p th:if="${genderError}" style="color: red" th:text="${genderError}"></p>
                 <div class="edit-profile-form-field">
                     <p>Website</p>
                     <input id="website" class="edit-profile-form-media" th:field="*{website}" type="text" placeholder="Website">
-                    <span class="error"></span>
                 </div>
+                <p th:if="${websiteError}" style="color: red" th:text="${websiteError}"></p>
                 <div class="edit-profile-form-field">
                     <p>Twitter</p>
                     <input id="twitter" class="edit-profile-form-media" th:field="*{twitter}" type="text" placeholder="Twitter">
-                    <span class="error"></span>
                 </div>
+                <p th:if="${twitterError}" style="color: red" th:text="${twitterError}"></p>
                 <div class="edit-profile-form-field">
                     <p>Instagram</p>
                     <input id="instagram" class="edit-profile-form-media" th:field="*{instagram}" type="text" placeholder="Instagram">
-                    <span class="error"></span>
                 </div>
+                <p th:if="${instagramError}" style="color: red" th:text="${instagramError}"></p>
                 <div class="edit-profile-form-field">
                     <p>Facebook</p>
                     <input id="facebook" class="edit-profile-form-media" th:field="*{facebook}" type="text" placeholder="Facebook">
-                    <span class="error"></span>
                 </div>
+                <p th:if="${facebookError}" style="color: red" th:text="${facebookError}"></p>
                 <div class="edit-profile-form-field">
                     <p>Facebook</p>
                     <input id="headline" class="edit-profile-form-media" th:field="*{headline}" type="text" placeholder="Headline">
                     <span class="error"></span>
                 </div>
-                <input name="submit-button" class="edit-profile-button" type="submit" value="Save">
+                <button name="submit-button" class="edit-profile-button" type="submit">Save</button>
             </form>
         </div>
     </div>
 </section>
 <th:block th:replace="~{fragments/footer.html}"></th:block>
 <script type="text/javascript">
-    const optionMenu = document.querySelector(".select-menu"),
-        selectBtn = optionMenu.querySelector(".select-btn"),
-        options = optionMenu.querySelectorAll(".option"),
-        sBtn_text = optionMenu.querySelector(".sBtn-text");
-    selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
-    options.forEach(option =>{
-        option.addEventListener("click", ()=>{
-            let selectedOption = option.querySelector(".option-text").innerText;
-            sBtn_text.innerText = selectedOption;
-            optionMenu.classList.remove("active");
-        });
-    });
 
-    const username = document.getElementById("username");
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirmPassword");
+    document.getElementById("edit-profile-form").addEventListener("submit", function(event) {
+        var gender = document.getElementById("gender").value;
+        var email = document.getElementById("email").value;
+        var confirmEmail = document.getElementById("confirm-email").value;
 
-
-    username.addEventListener("submit", (event) => {
-
-        var usernameValue = document.getElementById("username").value;
-
-        if (usernameValue.length === 0) {
+        if (gender.toString().length === 0) {
 
         } else {
-            if (usernameValue.length < 3 || usernameValue.length > 15) {
+            if (!isValidInput(gender)) {
                 event.preventDefault();
-                username.setCustomValidity("Username should be between 3 and 15 characters!")
-            } else {
-                username.setCustomValidity("");
+                alert("Invalid gender!")
             }
         }
 
-
-
-    });
-
-    email.addEventListener("submit", (event) => {
-
-        if (email.innerText.length=== 0) {
-
-        } else {
-            if (email.validity.typeMismatch) {
-                email.setCustomValidity("Please enter a valid e-mail address!");
-            } else {
-                email.setCustomValidity("");
-            }
+        if (email !== confirmEmail) {
+            event.preventDefault();
+            alert("Invalid email!")
         }
-
-
-
     });
 
-    password.addEventListener("submit", event => {
+    function isValidInput(gender) {
+        var validValues = ['MALE', 'FEMALE', 'OTHER'];
+        return validValues.includes(gender.toString().toUpperCase());
+    }
 
-        var passwordValue = document.getElementById("password").value;
-
-        if (passwordValue.length === 0) {
-
-        } else {
-            if (passwordValue.length < 3 || passwordValue.length > 15) {
-                event.preventDefault();
-                password.setCustomValidity("Password must be between 3 and 15 characters!");
-            } else {
-                password.setCustomValidity("");
-            }
-        }
-
-
-    });
-
-
-    confirmPassword.addEventListener("submit", event => {
-
-        var passwordValue = document.getElementById("password").value;
-        var confirmPasswordValue = document.getElementById("confirmPassword").value;
-
-        if (passwordValue.length === 0 && confirmPasswordValue === 0) {
-
-        } else {
-            if (confirmPasswordValue.length < 3 || confirmPasswordValue.length > 15) {
-                event.preventDefault();
-                password.setCustomValidity("Password must be between 3 and 15 characters!");
-            } else {
-                password.setCustomValidity("");
-            }
-
-            if (passwordValue !== confirmPasswordValue) {
-                event.preventDefault();
-                confirmPassword.setCustomValidity("Passwords should match!")
-            } else {
-                confirmPassword.setCustomValidity("");
-            }
-        }
-
-
-
-
-
-    });
 </script>
 </body>
 </html>

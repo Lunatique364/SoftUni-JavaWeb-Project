@@ -57,3 +57,7 @@ a:hover{
     text-decoration:none;
     color: var(--second-color);
 }
+
+.table tbody tr td a{
+    margin-right: 10px;
+}

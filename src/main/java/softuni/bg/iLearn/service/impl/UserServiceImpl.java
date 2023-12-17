@@ -2,7 +2,6 @@ package softuni.bg.iLearn.service.impl;
 
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import softuni.bg.iLearn.dto.EditProfileDTO;
 import softuni.bg.iLearn.dto.RegisterUserDTO;
 import softuni.bg.iLearn.dto.ResetPasswordDTO;
+import softuni.bg.iLearn.exception.NoAuthoritiesException;
 import softuni.bg.iLearn.model.MailDetails;
 import softuni.bg.iLearn.model.User;
 import softuni.bg.iLearn.model.enums.Gender;
@@ -23,9 +23,9 @@ import softuni.bg.iLearn.utils.CommonMessages;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
@@ -78,20 +78,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean editProfile(EditProfileDTO editProfileDTO, String value) {
+    public boolean editProfile(EditProfileDTO editProfileDTO, String value, UserDetails userDetails) {
         User user;
 
-        if (value.contains("@")) {
+        if (!value.contains("@")) {
             user = userRepository.findByUsername(value).get();
         } else {
             user = userRepository.findByEmail(value).get();
         }
 
-        editUser(user, editProfileDTO);
+        if (value.equals(userDetails.getUsername()) || userDetails.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
 
-        userRepository.save(user);
-
-        return true;
+            editUser(user, editProfileDTO);
+            userRepository.save(user);
+            return true;
+        }
+        throw new NoAuthoritiesException();
     }
 
     @Override
@@ -113,9 +115,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUserById(String id) {
+    public boolean deleteUserByUsername(String username) {
 
-        User user = userRepository.findById(Long.parseLong(id)).orElse(null);
+        User user = userRepository.findByUsername(username).orElse(null);
 
         if (user == null) {
             return false;
@@ -127,8 +129,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ProfileView getProfileView(String id) {
-        return toProfileView(userRepository.findById(Long.valueOf(id)).get());
+    public Optional<User> findByUsername(String username) {
+        return this.userRepository.findByUsername(username);
+    }
+
+    @Override
+    public ProfileView getProfileView(String username) {
+        return toProfileView(userRepository.findByUsername(username).get());
     }
 
     private String getNewRandomPassword() {
@@ -143,9 +150,8 @@ public class UserServiceImpl implements UserService {
 
         user.setFirstName(editProfileDTO.getFirstName().isEmpty() ? user.getFirstName() : editProfileDTO.getFirstName());
         user.setLastName(editProfileDTO.getLastName().isEmpty() ? user.getLastName() : editProfileDTO.getLastName());
-        Optional<Gender> gender = Optional.ofNullable(editProfileDTO.getGender());
         user.setEmail(editProfileDTO.getEmail().isEmpty() ? user.getEmail() : editProfileDTO.getEmail());
-        user.setGender(gender.isEmpty() ? user.getGender() : editProfileDTO.getGender());
+        user.setGender(editProfileDTO.getGender().isEmpty() ? Gender.valueOf(user.getGender().name()) : Gender.valueOf(editProfileDTO.getGender().toUpperCase()));
         user.setWebsite(editProfileDTO.getWebsite().isEmpty() ? user.getWebsite() : editProfileDTO.getWebsite());
         user.setTwitter(editProfileDTO.getTwitter().isEmpty() ? user.getTwitter() : editProfileDTO.getTwitter());
         user.setFacebook(editProfileDTO.getFacebook().isEmpty() ? user.getFacebook() : editProfileDTO.getFacebook());

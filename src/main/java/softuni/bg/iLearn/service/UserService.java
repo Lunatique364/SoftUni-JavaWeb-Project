@@ -8,6 +8,8 @@ import softuni.bg.iLearn.dto.ResetPasswordDTO;
 import softuni.bg.iLearn.model.User;
 import softuni.bg.iLearn.model.view.ProfileView;
 
+import java.util.Optional;
+
 public interface UserService {
 
     boolean register(RegisterUserDTO registerUserDTO);
@@ -16,10 +18,13 @@ public interface UserService {
 
     ProfileView getProfileView(UserDetails userDetails);
 
-    boolean editProfile(EditProfileDTO editProfileDTO, String username);
+    boolean editProfile(EditProfileDTO editProfileDTO, String username, UserDetails userDetails);
     boolean resetPassword(ResetPasswordDTO resetPasswordDTO);
 
-    boolean deleteUserById(String id);
+    ProfileView getProfileView(String username);
 
-    ProfileView getProfileView(String id);
+    boolean deleteUserByUsername(String username);
+
+    Optional<User> findByUsername(String username);
 }
+

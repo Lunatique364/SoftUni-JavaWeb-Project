@@ -27,7 +27,7 @@
                             <tr th:each="user : ${allUsersView.getAllUsers()}">
                                 <td >
                                     <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
-                                    <a th:text="${user.username}" th:href="@{/user/{id}(id=${user.getId()})}" class="user-link">Username</a>
+                                    <a th:text="${user.username}" th:href="@{/user/{username}(username=${user.getUsername()})}" class="user-link">Username</a>
                                     <span th:text="${user.role}" class="user-subhead">Role</span>
                                 </td>
                                 <td>
@@ -40,15 +40,13 @@
                                     <span th:text="${user.email}">email</span>
                                 </td>
                                 <td>
-                                    <a th:href="@{/user/{id}(id=${user.getId()})}" class="table-link text-warning">
+                                    <a th:href="@{/user/{username}(username=${user.getUsername()})}" class="table-link text-warning">
                                             <span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class='bx bx-search-alt-2'></i>
+                                                <i class="bx bx-search-alt-2"></i>
                                             </span>
                                     </a>
-                                    <a onclick="check()" th:method="post" th:href="@{/all-users}" th:object="${DeleteUserDTO}" class="table-link danger">
+                                    <a onclick="check()" th:method="post" th:href="@{/all-users}" th:action="@{/user/{username}}" class="table-link danger">
                                             <span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class='bx bx-trash' ></i>
                                             </span>
                                     </a>
