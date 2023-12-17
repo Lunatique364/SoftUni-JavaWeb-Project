@@ -61,4 +61,7 @@ public class User {
     @DateTimeFormat
     @Column()
     private LocalDate joined;
+
+    @Column
+    private boolean isBanned;
 }

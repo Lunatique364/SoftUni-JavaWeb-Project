@@ -28,7 +28,7 @@ public class LoginController {
 
     @PostMapping("/login-error")
     public String loginError(RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("badCredentials", true);
+        redirectAttributes.addFlashAttribute("wrongCredentials", true);
         return "redirect:/login";
     }
 
@@ -41,14 +41,18 @@ public class LoginController {
     public String postRegister(@Valid ResetPasswordDTO resetPasswordDTO,
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors() || !userService.resetPassword(resetPasswordDTO)) {
+
             redirectAttributes.addFlashAttribute("resetPasswordDTO", resetPasswordDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.resetPasswordDTO", bindingResult);
             redirectAttributes.addFlashAttribute("error", "invalid e-mail address");
             return "redirect:/forgot-password";
+
         }
 
-
+        redirectAttributes.addFlashAttribute("success", "Email successfully sent!");
         return "redirect:/login";
+
     }
 }

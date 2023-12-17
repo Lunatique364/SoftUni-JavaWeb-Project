@@ -22,7 +22,7 @@ public class WeeklyNewsletter {
     private Long id;
 
     @Transient
-    private List<Subscription> emails;
+    private List<String> emails;
 
     @OneToMany
     private List<Course> courses;
