@@ -44,6 +44,6 @@ public class BannedUserInterceptor implements HandlerInterceptor {
 
     private boolean isUserBanned(String username) {
         User user = userService.findByUsername(username).orElse(null);
-        return user != null && user.isBanned();
+        return user != null && user.getIsBanned();
     }
 }

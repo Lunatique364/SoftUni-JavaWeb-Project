@@ -26,5 +26,7 @@ public interface UserService {
     boolean deleteUserByUsername(String username);
 
     Optional<User> findByUsername(String username);
+
+    void banUserByUsername(String username);
 }
 

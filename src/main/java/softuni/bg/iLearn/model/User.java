@@ -3,6 +3,7 @@ package softuni.bg.iLearn.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -62,6 +63,6 @@ public class User {
     @Column()
     private LocalDate joined;
 
-    @Column
-    private boolean isBanned;
+    @Column(columnDefinition = "tinyint(1) default 1")
+    private Boolean isBanned;
 }

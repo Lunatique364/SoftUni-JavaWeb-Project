@@ -59,5 +59,6 @@ a:hover{
 }
 
 .table tbody tr td a{
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
 }

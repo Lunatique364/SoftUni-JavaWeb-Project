@@ -52,4 +52,6 @@ public class CommonMessages {
                 Message: %s
 """;
     public static final String USER_DOESNT_EXIST = "User %s doesn't exist!";
+    public static final String ADMIN_BAN = "Admin banned user %s  on %s";
+    public static final String ADMIN_DELETION = "Admin deleted user %s  on %s";
 }

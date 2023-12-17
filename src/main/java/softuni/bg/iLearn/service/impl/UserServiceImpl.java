@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.REGULAR);
         user.setJoined(LocalDate.now());
-        user.setBanned(false);
+        user.setIsBanned(false);
         MailDetails mailDetails = new MailDetails(CommonMessages.EMAIL_SENDER, user.getEmail(), CommonMessages.EMAIL_CREATION_SUBJECT, String.format(CommonMessages.EMAIL_CREATION_BODY, user.getUsername()));
 
         mailService.sendRegistrationMail(mailDetails);
@@ -132,6 +132,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByUsername(String username) {
         return this.userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void banUserByUsername(String username) {
+
     }
 
     @Override

@@ -1,18 +1,19 @@
 package softuni.bg.iLearn.controller;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import softuni.bg.iLearn.dto.DeleteUserDTO;
-import softuni.bg.iLearn.dto.RegisterUserDTO;
 import softuni.bg.iLearn.model.view.AllUsersView;
-import softuni.bg.iLearn.model.view.ProfileView;
 import softuni.bg.iLearn.service.AdminService;
 import softuni.bg.iLearn.service.UserService;
 
+import java.time.LocalDate;
+
+import static softuni.bg.iLearn.utils.CommonMessages.ADMIN_BAN;
+
 @Controller
+@Slf4j
 public class AdminController {
 
     private final AdminService adminService;
@@ -36,10 +37,17 @@ public class AdminController {
         return "all-users";
     }
 
-    @PostMapping("/user/{username}")
+    @DeleteMapping("/delete/{username}")
     public String postDelete(@PathVariable String username) {
        userService.deleteUserByUsername(username);
        return "redirect:/all-users";
+    }
+
+    @PostMapping("/ban/{username}")
+    public String postBan(@PathVariable String username) {
+        userService.banUserByUsername(username);
+        log.info(String.format(ADMIN_BAN, username, LocalDate.now()));
+        return "redirect:/all-users";
     }
 
 }

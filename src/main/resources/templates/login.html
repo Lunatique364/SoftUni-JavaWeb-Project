@@ -9,7 +9,7 @@
         <div class="login-form">
             <h1 class="sign-in-header">Sign in</h1>
             <form th:method="post" th:action="@{/login}">
-                <p class="alert alert-danger" th:if="${wrongCredentials}" th:text="#{wrongLogin}"></p>
+                <p class="alert alert-danger" th:if="${wrongCredentials}" th:text="${wrongCredentials}"></p>
                 <div class="login-form-field">
                     <input name="username" class="login-form-username" type="text" placeholder="Username" required autocomplete="off">
                 </div>

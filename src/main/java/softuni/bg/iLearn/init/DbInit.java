@@ -34,6 +34,7 @@ public class DbInit implements ApplicationRunner {
             admin.setEmail(CommonMessages.EMAIL_ADMIN);
             admin.setPassword(passwordEncoder.encode(CommonMessages.EMAIL_PASSWORD));
             admin.setRole(Role.ADMIN);
+            admin.setIsBanned(false);
             admin.setJoined(LocalDate.now());
 
             userRepository.save(admin);
