@@ -135,7 +135,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void banUserByUsername(String username) {
+    public boolean banUserByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+
+        if (user == null) {
+            return false;
+        }
+
+        user.setIsBanned(true);
+        userRepository.save(user);
+        return true;
 
     }
 

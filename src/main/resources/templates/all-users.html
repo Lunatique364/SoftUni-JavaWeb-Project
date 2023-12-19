@@ -39,24 +39,32 @@
                                 <td>
                                     <span th:text="${user.email}">email</span>
                                 </td>
-                                <td>
+                                <td style="text-align: center">
+                                    <div class="button-container" style="display: flex; justify-content: center; align-items: center; margin-left: 5px; margin-right: 5px;">
+                                    <button>
                                     <a th:href="@{/user/{username}(username=${user.getUsername()})}" class="table-link text-info">
                                             <span class="fa-stack">
                                                 <i class="bx bx-search-alt-2"></i>
                                             </span>
                                     </a>
-                                    <i class='bx bx-minus bx-rotate-90' ></i>
-                                    <a onclick="checkBan()" th:method="post" th:href="@{/all-users}" th:action="@{/ban/{username}}" class="table-link text-danger">
+                                    </button>
+                                    <form th:method="post" th:action="@{/ban/{username}(username=${user.username})}" onsubmit="checkBan()">
+                                        <button  th:href="@{/all-users}"  class="table-link" >
                                             <span class="fa-stack">
-                                                <i class='bx bx-user-x' ></i>
+                                                <i class='bx bxs-circle text-danger' th:if="${user.isBanned}" ></i>
+                                                <i class='bx bxs-circle text-success' th:if="${!user.isBanned}" ></i>
                                             </span>
-                                    </a>
-                                    <i class='bx bx-minus bx-rotate-90' ></i>
-                                    <a onclick="checkDelete()" th:method="post" th:href="@{/all-users}" th:action="@{/delete/{username}}" class="table-link text-dark">
+                                        </button>
+                                    </form>
+
+                                    <form th:method="post"  th:action="@{/delete/{username}(username=${user.username})}" onsubmit="checkDelete()">
+                                    <button  th:href="@{/all-users}" class="table-link text-dark" >
                                             <span class="fa-stack">
                                                 <i class='bx bx-trash' ></i>
                                             </span>
-                                    </a>
+                                    </button>
+                                    </form>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>

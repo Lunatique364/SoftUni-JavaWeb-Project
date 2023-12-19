@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 import softuni.bg.iLearn.model.User;
 import softuni.bg.iLearn.service.UserService;
 
@@ -23,8 +24,9 @@ public class BannedUserInterceptor implements HandlerInterceptor {
         this.userService = userService;
     }
 
+
     @Override
-    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception{
+    public void postHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, ModelAndView modelAndView) throws Exception {
 
         Principal userPrincipal = request.getUserPrincipal();
         if (userPrincipal != null) {
@@ -33,13 +35,11 @@ public class BannedUserInterceptor implements HandlerInterceptor {
             if (name != null) {
                 if (isUserBanned(name)) {
                     logger.info("Banned user attempted to access: {}", request.getRequestURI());
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    return false;
+                    modelAndView.setViewName("error/403");
                 }
             }
         }
 
-        return true;
     }
 
     private boolean isUserBanned(String username) {

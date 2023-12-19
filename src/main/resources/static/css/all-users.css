@@ -62,3 +62,8 @@ a:hover{
     margin-right: 5px;
     margin-left: 5px;
 }
+
+.table tbody tr td button{
+    border: none;
+    background-color: white;
+}

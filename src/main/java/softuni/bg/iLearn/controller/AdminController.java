@@ -37,16 +37,23 @@ public class AdminController {
         return "all-users";
     }
 
-    @DeleteMapping("/delete/{username}")
+    @PostMapping("/delete/{username}")
     public String postDelete(@PathVariable String username) {
-       userService.deleteUserByUsername(username);
+
+        if (!username.equals("admin")) {
+            userService.deleteUserByUsername(username);
+        }
        return "redirect:/all-users";
     }
 
     @PostMapping("/ban/{username}")
     public String postBan(@PathVariable String username) {
-        userService.banUserByUsername(username);
-        log.info(String.format(ADMIN_BAN, username, LocalDate.now()));
+
+        if (!username.equals("admin")) {
+            userService.banUserByUsername(username);
+            log.info(String.format(ADMIN_BAN, username, LocalDate.now()));
+        }
+
         return "redirect:/all-users";
     }
 

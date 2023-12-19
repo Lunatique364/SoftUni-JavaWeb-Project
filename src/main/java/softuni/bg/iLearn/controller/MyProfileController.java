@@ -80,4 +80,20 @@ public class MyProfileController {
 
     }
 
+    private boolean isUserPresent(String username) {
+        Optional<User> user = this.userService.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException(username);
+        }
+        return true;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UserNotFoundException.class)
+    public ModelAndView onProfileNotFound(UserNotFoundException unfe) {
+        ModelAndView modelAndView = new ModelAndView("error/user-not-found");
+        modelAndView.addObject("username", unfe.getUsername());
+        return modelAndView;
+    }
+
 }
