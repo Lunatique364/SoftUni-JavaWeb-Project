@@ -21,7 +21,7 @@ public class WeeklyNewsletter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Transient
+    @ElementCollection
     private List<String> emails;
 
     @OneToMany

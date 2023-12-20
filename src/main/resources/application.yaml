@@ -43,8 +43,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${EMAIL}
-    password: ${PASSWORD}
+    username: ${EMAIL:alerts.ilearn@gmail.com}
+    password: ${PASSWORD:umosnzrllzobcdll}
     properties.mail:
       smtp:
         auth: true

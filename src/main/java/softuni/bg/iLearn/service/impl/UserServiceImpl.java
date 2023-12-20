@@ -118,6 +118,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUserByUsername(String username) {
 
+        if (username.equals("admin")) {
+
+        }
+
         User user = userRepository.findByUsername(username).orElse(null);
 
         if (user == null) {

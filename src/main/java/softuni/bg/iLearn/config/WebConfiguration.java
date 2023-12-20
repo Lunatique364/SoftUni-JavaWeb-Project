@@ -1,5 +1,6 @@
 package softuni.bg.iLearn.config;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,4 +25,5 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(bannedUserInterceptor);
         registry.addInterceptor(maintenanceInterceptor);
     }
+
 }

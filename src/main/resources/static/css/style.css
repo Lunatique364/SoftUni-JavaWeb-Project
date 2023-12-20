@@ -445,13 +445,13 @@ footer{
 .footer-icons{
     display: flex;
     align-items: center;
+    gap: 15px;
 }
 .footer-icons i{
     margin-right: 10px;
     font-size: 24px;
     color: var(--text-color);
     transition: all .40s ease;
-    margin-left: 15px;
 }
 .footer-icons i:hover{
     transform: scale(1.2);

@@ -35,7 +35,7 @@ public class MyProfileController {
     @GetMapping("/edit-profile/{username}")
     public String editProfile(Model model, @AuthenticationPrincipal UserDetails userDetails, @PathVariable String username) {
 
-        if (userService.findByUsername(username).isEmpty()) {
+        if (userService.findByUsername(username).isEmpty()) { // TODO MOVE TO SERVICE
             throw new UserNotFoundException("User not found");
         }
         model.addAttribute("username", username);
@@ -48,7 +48,7 @@ public class MyProfileController {
     @GetMapping("/user/{username}")
     public String viewProfile( Model model,
                                @AuthenticationPrincipal UserDetails userDetails, @PathVariable String username) {
-        if (isUserPresent(username)) {
+        if (isUserPresent(username)) {  // TODO MOVE TO SERVICE
             model.addAttribute("username", username);
             ProfileView profileView = userService.getProfileView(username);
             model.addAttribute("profileView", profileView);
@@ -84,7 +84,7 @@ public class MyProfileController {
 
     }
 
-    private boolean isUserPresent(String username) {
+    private boolean isUserPresent(String username) { // TODO: move to service SOMEHOW
         Optional<User> user = this.userService.findByUsername(username);
         if (user.isEmpty()) {
             throw new UserNotFoundException(username);

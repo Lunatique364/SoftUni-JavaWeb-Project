@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    defer-datasource-initialization: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL:alerts.ilearn@gmail.com}
+    password: ${PASSWORD:umosnzrllzobcdll}
+    properties.mail:
+      smtp:
+        auth: true
+        starttls.enable: true

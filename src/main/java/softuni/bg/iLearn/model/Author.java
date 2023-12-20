@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,6 +22,13 @@ public class Author {
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
-    @OneToMany
+
+    @OneToMany(mappedBy = "author")
     private List<Course> courses;
+
+    public Author(User user) {
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.courses = new ArrayList<>();
+    }
 }
