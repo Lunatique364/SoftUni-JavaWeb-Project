@@ -11,6 +11,7 @@ import softuni.bg.iLearn.dto.EditProfileDTO;
 import softuni.bg.iLearn.dto.RegisterUserDTO;
 import softuni.bg.iLearn.dto.ResetPasswordDTO;
 import softuni.bg.iLearn.exception.NoAuthoritiesException;
+import softuni.bg.iLearn.exception.UserNotFoundException;
 import softuni.bg.iLearn.model.MailDetails;
 import softuni.bg.iLearn.model.User;
 import softuni.bg.iLearn.model.enums.Gender;
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUserByUsername(String username) {
 
         if (username.equals("admin")) {
-
+            throw new NoAuthoritiesException();
         }
 
         User user = userRepository.findByUsername(username).orElse(null);
@@ -140,6 +141,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean banUserByUsername(String username) {
+
+        if (username.equals("admin")) {
+            throw new NoAuthoritiesException();
+        }
         User user = userRepository.findByUsername(username).orElse(null);
 
         if (user == null) {
@@ -150,6 +155,32 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return true;
 
+    }
+
+    @Override
+    public boolean updateUserRoleByUsername(String username) {
+
+        if (username.equals("admin")) {
+            throw new NoAuthoritiesException();
+        }
+
+        User user = userRepository.findByUsername(username).orElse(null);
+
+        if (user == null) {
+            return false;
+        }
+
+        String currentRole = user.getRole().name();
+
+        if (currentRole.equals("REGULAR")) {
+            user.setRole(Role.LECTURER);
+        } else {
+            user.setRole(Role.REGULAR);
+        }
+
+        userRepository.save(user);
+
+        return true;
     }
 
     @Override
@@ -177,6 +208,14 @@ public class UserServiceImpl implements UserService {
         user.setInstagram(editProfileDTO.getInstagram().isEmpty() ? user.getInstagram() : editProfileDTO.getInstagram());
         user.setHeadline(editProfileDTO.getHeadline().isEmpty() ? user.getHeadline() : editProfileDTO.getHeadline());
 
+    }
+    @Override
+    public boolean isUserPresent(String username) {
+        Optional<User> user = this.userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException(username);
+        }
+        return true;
     }
 
 

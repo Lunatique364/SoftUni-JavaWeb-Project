@@ -58,7 +58,7 @@ public class DbInit implements ApplicationRunner {
                 author.getCourses().add(course);
                 course.setAuthor(author);
                 course.setDescription("Description" + i);
-                course.setDateAdded(LocalDateTime.now());
+                course.setDateAdded(LocalDate.now());
                 course.setCategory(Category.MATHEMATICS);
                 course.setPrice(BigDecimal.valueOf(i * 10));
                 courseRepository.save(course);
@@ -80,6 +80,15 @@ public class DbInit implements ApplicationRunner {
             admin.setIsBanned(false);
             admin.setJoined(LocalDate.now());
 
+            user.setUsername("user123");
+            user.setFirstName("user123");
+            user.setLastName("user123");
+            user.setEmail("user123@ilearn.com");
+            user.setPassword(passwordEncoder.encode("user123"));
+            user.setRole(Role.REGULAR);
+            user.setIsBanned(false);
+            user.setJoined(LocalDate.now());
+            userRepository.save(user);
 
             seedCourses(userRepository.save(admin));
         }

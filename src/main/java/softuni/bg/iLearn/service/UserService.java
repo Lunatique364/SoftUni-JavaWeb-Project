@@ -21,6 +21,8 @@ public interface UserService {
     boolean editProfile(EditProfileDTO editProfileDTO, String username, UserDetails userDetails);
     boolean resetPassword(ResetPasswordDTO resetPasswordDTO);
 
+    boolean isUserPresent(String username);
+
     ProfileView getProfileView(String username);
 
     boolean deleteUserByUsername(String username);
@@ -28,5 +30,7 @@ public interface UserService {
     Optional<User> findByUsername(String username);
 
     boolean banUserByUsername(String username);
+
+    boolean updateUserRoleByUsername(String username);
 }
 

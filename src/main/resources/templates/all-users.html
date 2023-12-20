@@ -48,6 +48,14 @@
                                             </span>
                                     </a>
                                     </button>
+                                    <form th:method="post" th:action="@{/update-role/{username}(username=${user.username})}" onsubmit="checkChangeRole()">
+                                        <button  th:href="@{/all-users}"  class="table-link" >
+                                            <span class="fa-stack">
+                                                <i class='bx bxs-up-arrow text-info' th:if="${user.getRole().name().equals('REGULAR')}" ></i>
+                                                <i class='bx bxs-down-arrow text-danger' th:if="${user.getRole().name().equals('LECTURER')}" ></i>
+                                            </span>
+                                        </button>
+                                    </form>
                                     <form th:method="post" th:action="@{/ban/{username}(username=${user.username})}" onsubmit="checkBan()">
                                         <button  th:href="@{/all-users}"  class="table-link" >
                                             <span class="fa-stack">
@@ -56,7 +64,6 @@
                                             </span>
                                         </button>
                                     </form>
-
                                     <form th:method="post"  th:action="@{/delete/{username}(username=${user.username})}" onsubmit="checkDelete()">
                                     <button  th:href="@{/all-users}" class="table-link text-dark" >
                                             <span class="fa-stack">
@@ -91,6 +98,12 @@
             event.preventDefault();
         }
 
+    }
+    function checkChangeRole() {
+        var result = confirm("Are you sure you want to update the user's role?");
+        if (result === false) {
+            event.preventDefault();
+        }
     }
 </script>
 </body>

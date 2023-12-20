@@ -35,20 +35,20 @@ public class MyProfileController {
     @GetMapping("/edit-profile/{username}")
     public String editProfile(Model model, @AuthenticationPrincipal UserDetails userDetails, @PathVariable String username) {
 
-        if (userService.findByUsername(username).isEmpty()) { // TODO MOVE TO SERVICE
-            throw new UserNotFoundException("User not found");
+        if (userService.isUserPresent(username)) {
+            model.addAttribute("username", username);
+            ProfileView profileView = userService.getProfileView(userDetails);
+            model.addAttribute("editProfileView", profileView);
+            return "edit-profile";
         }
-        model.addAttribute("username", username);
-        ProfileView profileView = userService.getProfileView(userDetails);
-        model.addAttribute("editProfileView", profileView);
-        return "edit-profile";
 
+        return "redirect:/edit-profile/{username}";
     }
 
     @GetMapping("/user/{username}")
     public String viewProfile( Model model,
                                @AuthenticationPrincipal UserDetails userDetails, @PathVariable String username) {
-        if (isUserPresent(username)) {  // TODO MOVE TO SERVICE
+        if (userService.isUserPresent(username)) {
             model.addAttribute("username", username);
             ProfileView profileView = userService.getProfileView(username);
             model.addAttribute("profileView", profileView);
@@ -84,13 +84,6 @@ public class MyProfileController {
 
     }
 
-    private boolean isUserPresent(String username) { // TODO: move to service SOMEHOW
-        Optional<User> user = this.userService.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException(username);
-        }
-        return true;
-    }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(UserNotFoundException.class)

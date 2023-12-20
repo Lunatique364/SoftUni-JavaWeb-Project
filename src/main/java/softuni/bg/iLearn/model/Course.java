@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import softuni.bg.iLearn.model.enums.Category;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -32,7 +32,7 @@ public class Course {
     private Category category;
 
     @Column
-    private LocalDateTime dateAdded;
+    private LocalDate dateAdded;
 
     @Column
     private BigDecimal price;

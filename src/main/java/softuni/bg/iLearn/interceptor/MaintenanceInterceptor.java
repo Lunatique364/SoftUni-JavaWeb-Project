@@ -14,9 +14,9 @@ import java.time.LocalTime;
 @Slf4j
 public class MaintenanceInterceptor implements HandlerInterceptor {
 
-    private static final LocalTime MAINTENANCE_START_TIME = LocalTime.of(4, 0);
+    private static final LocalTime MAINTENANCE_START_TIME = LocalTime.of(1, 0);
 
-    private static final LocalTime MAINTENANCE_END_TIME = LocalTime.of(5, 0);
+    private static final LocalTime MAINTENANCE_END_TIME = LocalTime.of(2, 0);
 
 
     @Override

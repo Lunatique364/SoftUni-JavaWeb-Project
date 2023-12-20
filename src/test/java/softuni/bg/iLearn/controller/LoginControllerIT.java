@@ -10,8 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import softuni.bg.iLearn.model.MailDetails;
+import softuni.bg.iLearn.model.User;
 import softuni.bg.iLearn.repository.UserRepository;
-import softuni.bg.iLearn.service.UserService;
+import softuni.bg.iLearn.service.MailService;
+import softuni.bg.iLearn.utils.CommonMessages;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,28 +22,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-public class UserControllerIT {
+public class LoginControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private UserRepository userRepository;
 
-    @Test
-    @WithMockUser(username="userAdmin", roles = {"ADMIN"})
-    public void shootRegisterUser() throws Exception {
+    @Autowired
+    private MailService mailService;
 
-        int before = (int) userRepository.count();
+    @Test
+    public void testResetPassword() throws Exception {
+
+        User user = userRepository.findByUsername("user123").orElse(null);
+
+        String beforePassword = user.getPassword();
+
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/register").param("username", "user12345")
-                        .param("email", "user12345@ilearn.com")
-                        .param("password", "1234")
-                        .param("confirmPassword", "1234")
+                        .post("/forgot-password")
+                        .param("email", "user123@ilearn.com")
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection());
 
-        int after = (int) userRepository.count();
-        Assertions.assertEquals(before + 1, after);
+        User updatedPassword = userRepository.findByUsername("user123").orElse(null);
+
+        Assertions.assertNotEquals(beforePassword, updatedPassword);
+
     }
 }
