@@ -53,13 +53,6 @@ public class HomeControllerIT {
     @Test
     public void testRegisterNewsletter() throws Exception {
 
-//        WeeklyNewsletter weeklyNewsletter = new WeeklyNewsletter();
-//
-//        weeklyNewsletter.setDate(LocalDateTime.now());
-//        weeklyNewsletter.setCourses(courseRepository.findAll());
-//        weeklyNewsletter.setEmails(new ArrayList<>());
-//        weeklyNewsletter.getEmails().add("stefan.stefanov3@gmail.com");
-
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/")
@@ -84,7 +77,7 @@ public class HomeControllerIT {
     @Test
     void testAboutUsPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/about"))
-                .andExpect(status().is3xxRedirection())                // Expect HTTP 200 OK
-                .andExpect(view().name("about-us"));       // Expect view name to be "about-us"
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("about-us"));
     }
 }
